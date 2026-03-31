@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>k-id bypass tool</title>
+<meta name="title" content="k-id bypass tool v28 deluxe ultimate" />
+<meta name="description" content="it bypasses discord age verification lol." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mollomm1.github.io/ageman/" />
+<meta property="og:title" content="k-id bypass tool v28 deluxe ultimate" />
+<meta property="og:description" content="it bypasses discord age verification lol." />
+<meta property="og:image" content="https://mollomm1.github.io/ageman/assets/embed.png" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://mollomm1.github.io/ageman/" />
+<meta property="twitter:title" content="k-id bypass tool v28 deluxe ultimate" />
+<meta property="twitter:description" content="it bypasses discord age verification lol." />
+<meta property="twitter:image" content="https://mollomm1.github.io/ageman/assets/embed.png" />
+
+<title>k-id bypass tool</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Space+Grotesk:wght@400;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0a0f;color:#e0e0e8;font-family:'JetBrains Mono',monospace;overflow:hidden;height:100vh;touch-action:none;display:flex}
+  canvas{display:block}
+  .sidebar{width:320px;height:100vh;background:rgba(10,10,20,0.95);backdrop-filter:blur(20px);border-right:1px solid rgba(100,220,255,0.15);padding:20px;display:flex;flex-direction:column;gap:15px;overflow-y:auto;z-index:100;pointer-events:auto;flex-shrink:0}
+  .sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:rgba(100,220,255,0.2);border-radius:2px}
+  .viewport{flex:1;position:relative;height:100vh;overflow:hidden}
+  .hud{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:10}
+  .hp{background:rgba(15,15,25,0.6);border:1px solid rgba(100,220,255,0.1);border-radius:8px;padding:14px 18px;pointer-events:auto;user-select:none;margin-bottom:5px}
+  .hp>*:not(.ht){cursor:default}
+  .hp.collapsed>*:not(.ht){display:none!important}
+  .ht{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2.5px;color:rgba(100,220,255,0.7);margin-bottom:10px;display:flex;align-items:center;gap:8px;justify-content:space-between;cursor:pointer}
+  .ht::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#64dcff;box-shadow:0 0 8px #64dcff}
+  .ht-toggle{opacity:0.5;font-size:14px;line-height:1;padding:0 4px}
+  .ht-toggle:hover{opacity:1}
+  .main-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;letter-spacing:1px;color:#e8e8f0;margin-bottom:10px;pointer-events:none;border-bottom:1px solid rgba(100,220,255,0.1);padding-bottom:15px}
+  .main-title span{color:#64dcff}
+  .model-panel{position:absolute;top:20px;right:20px;max-width:380px;max-height:calc(100vh - 40px);overflow-y:auto;background:rgba(10,10,20,0.85);backdrop-filter:blur(12px);border:1px solid rgba(100,220,255,0.15);border-radius:8px;padding:14px 18px;pointer-events:auto}
+  .model-panel::-webkit-scrollbar{width:5px}.model-panel::-webkit-scrollbar-track{background:transparent}.model-panel::-webkit-scrollbar-thumb{background:rgba(100,220,255,0.2);border-radius:3px}
+
+  /* Instruction Modal */
+
+  /* Instruction Modal */
+  #howto-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(5, 5, 10, 0.9);
+    backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+  .modal-content {
+    background: rgba(20, 20, 30, 0.95);
+    border: 1px solid rgba(100, 220, 255, 0.2);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    padding: 30px;
+    position: relative;
+    overflow-y: auto;
+    color: #e0e0e8;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .modal-close {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: none; border: none;
+    color: #64dcff; font-size: 20px; cursor: pointer;
+    opacity: 0.6;
+  }
+  .modal-close:hover { opacity: 1; }
+  .markdown-content h1, .markdown-content h2 { font-family: 'Space Grotesk', sans-serif; color: #64dcff; margin-bottom: 15px; }
+  .markdown-content h1 { font-size: 22px; border-bottom: 1px solid rgba(100, 220, 255, 0.2); padding-bottom: 10px; }
+  .markdown-content h2 { font-size: 18px; margin-top: 20px; }
+  .markdown-content p { margin-bottom: 12px; font-size: 13px; }
+  .markdown-content ul { margin-bottom: 12px; padding-left: 20px; }
+  .markdown-content li { margin-bottom: 5px; font-size: 13px; }
+  .markdown-content code { background: rgba(100, 220, 255, 0.1); padding: 2px 5px; border-radius: 4px; color: #64dcff; }
+  .kid-panel{top:60px;left:20px;max-width:360px;max-height:calc(100vh - 200px);overflow-y:auto}
+  .kid-panel::-webkit-scrollbar{width:5px}.kid-panel::-webkit-scrollbar-track{background:transparent}.kid-panel::-webkit-scrollbar-thumb{background:rgba(100,220,255,0.2);border-radius:3px}
+  @media(max-width:768px){
+    .hp{font-size:10px;padding:10px 12px;max-width:calc(100vw - 20px)}
+    .hp.collapsed>*:not(.ht){display:none!important}
+    .hp.collapsed{min-width:auto!important;padding:8px 10px!important}
+    .main-title{font-size:14px;top:10px;left:10px;}
+    .controller-status{bottom:25px;right:10px;max-width:calc(48vw - 15px)}
+    .sensitivity-panel{top:55px;left:10px;max-width:calc(48vw - 15px)}
+    .kid-panel{top:100px;left:10px;max-width:calc(100vw - 20px);max-height:25vh;overflow-y:auto}
+    .model-panel{top:calc(25vh + 110px);left:10px;max-width:calc(100vw - 20px);max-height:25vh;overflow-y:auto}
+    .controls-panel{top:calc(50vh + 120px);left:10px;max-width:calc(48vw - 15px)}
+    .values-panel{top:calc(50vh + 120px);right:10px;max-width:calc(48vw - 15px)}
+    .ht{font-size:10px;letter-spacing:1.5px}
+    .hide-ui-btn{top:10px;right:10px;font-size:9px;padding:4px 10px;transform:none}
+  }
+  .sd{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .sd.on{background:#4ade80;box-shadow:0 0 8px #4ade80}.sd.off{background:#f87171;box-shadow:0 0 8px #f87171}
+  .cr{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11px;color:#a0a0b0;gap:12px}
+  .ck{background:rgba(100,220,255,0.1);border:1px solid rgba(100,220,255,0.25);border-radius:4px;padding:2px 8px;font-size:10px;color:#64dcff;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+  .vr{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px}
+  .vl{color:#808090}.vn{color:#64dcff;font-weight:600;font-variant-numeric:tabular-nums}
+  .vbt{width:80px;height:4px;background:rgba(100,220,255,0.1);border-radius:2px;overflow:hidden;margin-left:10px}
+  .vbf{height:100%;background:linear-gradient(90deg,#64dcff,#a78bfa);border-radius:2px;transition:width 0.05s linear}
+  .sr{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:11px;color:#a0a0b0}
+  .sb{background:rgba(100,220,255,0.1);border:1px solid rgba(100,220,255,0.3);color:#64dcff;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .sb:hover{background:rgba(100,220,255,0.25)}
+  .sv{color:#64dcff;font-weight:600;min-width:30px;text-align:center}
+  .cb{flex:1;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);color:#a78bfa;padding:5px 8px;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.3px;white-space:nowrap}
+  .cb:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.5)}
+  .lbtn{background:rgba(100,220,255,0.1);border:1px solid rgba(100,220,255,0.3);color:#64dcff;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.5px;width:100%}
+  .lbtn:hover{background:rgba(100,220,255,0.2);border-color:rgba(100,220,255,0.5)}
+  #model-file,#model-multi{display:none}
+  .li{font-size:10px;color:#707080;margin-top:8px;line-height:1.5;white-space:pre-line}
+  .err{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:4px;padding:8px;margin-top:8px;font-size:10px;color:#f87171;display:none;word-break:break-all}
+  .ok-box{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);border-radius:4px;padding:8px;margin-top:8px;font-size:10px;color:#4ade80;display:none;white-space:pre-line;line-height:1.5}
+  .bsel{background:rgba(10,10,20,0.9);border:1px solid rgba(100,220,255,0.2);color:#e0e0e8;padding:4px 8px;border-radius:4px;font-size:10px;font-family:'JetBrains Mono',monospace;width:100%;margin-top:2px}
+  .bsel option{background:#1a1a2e}
+  .brow{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px}
+  .blbl{min-width:45px;font-weight:600}
+  .blbl.hd{color:#4ade80}.blbl.nk{color:#facc15}.blbl.jw{color:#f97316}
+  .jaw-row{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:10px;color:#a0a0b0}
+  .axb{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:#f97316;padding:2px 8px;border-radius:3px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace}
+  .axb:hover{background:rgba(249,115,22,0.25)}.axb.active{background:rgba(249,115,22,0.3);border-color:#f97316;font-weight:600}
+  .sub{font-size:10px;color:#5a5a6a;margin-top:3px}
+  .orbit-hint{position:absolute;bottom:55px;left:50%;transform:translateX(-50%);font-size:10px;color:#353545;pointer-events:none}
+  .format-badges{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+  .fbadge{font-size:9px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:0.5px}
+  .fbadge.vrm{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.3)}
+  .fbadge.fbx{background:rgba(167,139,250,0.15);color:#a78bfa;border:1px solid rgba(167,139,250,0.3)}
+  .fbadge.glb{background:rgba(100,220,255,0.15);color:#64dcff;border:1px solid rgba(100,220,255,0.3)}
+  .fbadge.zip{background:rgba(250,204,21,0.15);color:#facc15;border:1px solid rgba(250,204,21,0.3)}
+  .drop-zone{border:2px dashed rgba(100,220,255,0.3);border-radius:6px;padding:12px;margin-top:8px;text-align:center;font-size:10px;color:#5a5a6a;transition:all 0.2s;cursor:pointer}
+  .drop-zone.over{border-color:#64dcff;background:rgba(100,220,255,0.05);color:#64dcff}
+  .morph-tester{margin-top:8px;padding:8px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:6px}
+  .morph-tester-row{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:10px;color:#b0b0c0}
+  .morph-tester-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;padding:2px 4px;border-radius:3px}
+  .morph-tester-name:hover{background:rgba(249,115,22,0.1)}
+  .morph-tester-name.active{color:#f97316;background:rgba(249,115,22,0.15)}
+  .morph-tester-val{min-width:30px;text-align:right;color:#f97316;font-weight:600}
+  .morph-slider{width:60px;accent-color:#f97316}
+  .morph-map{font-size:8px;padding:2px 6px;border-radius:3px;background:rgba(74,222,128,0.08);color:#4ade80;border:1px solid rgba(74,222,128,0.2);cursor:pointer;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+  .morph-map:hover{background:rgba(74,222,128,0.2);border-color:#4ade80}
+  .morph-map.mapped{background:rgba(74,222,128,0.2);border-color:#4ade80;font-weight:600}
+  .morph-auto{font-size:9px;padding:2px 6px;border-radius:3px;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.25)}
+  .hp{cursor:move;user-select:none}
+  .hp.dragging{opacity:0.8;z-index:999}
+  .top-right-btns{position:absolute;top:20px;right:20px;display:flex;gap:8px;pointer-events:auto;z-index:20}
+  .top-btn{background:rgba(10,10,20,0.85);backdrop-filter:blur(12px);border:1px solid rgba(100,220,255,0.15);border-radius:6px;padding:6px 14px;color:#64dcff;font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer}
+  .top-btn:hover{background:rgba(100,220,255,0.15)}
+  .hud.hidden .hp{display:none!important}
+  .hud.hidden .top-right-btns{display:flex!important}
+  .kid-input{background:rgba(10,10,20,0.9);border:1px solid rgba(100,220,255,0.2);color:#e0e0e8;padding:6px 10px;border-radius:4px;font-size:11px;font-family:'JetBrains Mono',monospace;width:100%;margin-top:4px}
+  .kid-btn{background:rgba(100,220,255,0.1);border:1px solid rgba(100,220,255,0.3);color:#64dcff;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;width:100%;margin-top:8px}
+  .kid-btn:hover{background:rgba(100,220,255,0.2)}
+  .kid-output{background:rgba(10,10,20,0.95);border:1px solid rgba(100,220,255,0.2);border-radius:4px;padding:8px;margin-top:8px;font-size:9px;color:#a0a0b0;max-height:200px;overflow-y:auto;font-family:'JetBrains Mono',monospace;white-space:pre-wrap;word-break:break-all;display:none}
+  .kid-output::-webkit-scrollbar{width:4px}.kid-output::-webkit-scrollbar-track{background:transparent}.kid-output::-webkit-scrollbar-thumb{background:rgba(100,220,255,0.2);border-radius:2px}
+  
+  #global-loader {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(10, 10, 20, 0.8);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #64dcff;
+    pointer-events: auto;
+  }
+  .loader-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(100, 220, 255, 0.2);
+    border-top: 3px solid #64dcff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .loader-text { letter-spacing: 4px; text-transform: uppercase; font-size: 14px; font-weight: 600; text-shadow: 0 0 15px rgba(100, 220, 255, 0.5); }
+  .loader-bar-container {
+    width: 250px;
+    height: 6px;
+    background: rgba(100, 220, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 20px;
+    overflow: hidden;
+    display: none;
+  }
+  .loader-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #64dcff, #a78bfa);
+    transition: width 0.1s ease-out;
+  }
+  
+  @media(max-width:768px){
+    .orbit-hint{display:none}
+    .vbt{width:50px}
+    .cr{font-size:9px;gap:6px}
+    .ck{font-size:8px;padding:1px 5px}
+  }
+</style>
+</head>
+<body>
+<div id="global-loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">Loading model...</div>
+  <div class="loader-bar-container" id="loader-bar-container">
+    <div class="loader-bar-fill" id="loader-bar-fill"></div>
+  </div>
+</div>
+<div id="howto-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="howto-close">&times;</button>
+    <div class="markdown-content" id="howto-content"></div>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="main-title"><span>☠</span> K-ID Bypass Tool<br><span style="font-size:9px;opacity:0.5;letter-spacing:0">Custom build by Mollomm1,</span><p><span style="font-size:9px;opacity:0.5;letter-spacing:0">Original work by PromptPirate.</span></p></div>
+  
+  <div class="hp sensitivity-panel" style="display: none !important;">
+    <div class="ht">Sensitivity<span class="ht-toggle">−</span></div>
+    <div class="sr"><span style="min-width:45px">Head</span><button class="sb" id="hs-d">−</button><span class="sv" id="hs-v">1.0</span><button class="sb" id="hs-u">+</button></div>
+    <div class="sr"><span style="min-width:45px">Mouth</span><button class="sb" id="ms-d">−</button><span class="sv" id="ms-v">1.0</span><button class="sb" id="ms-u">+</button></div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Mouth Sm</span>
+      <input type="range" id="mouth-sm" min="0.01" max="0.5" step="0.01" value="0.15" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="msm-v" style="color:#64dcff;min-width:35px">0.15</span>
+    </div>
+    <div class="sr"><span style="min-width:45px;color:#f97316">Range</span><button class="sb" id="mr-d" style="border-color:rgba(249,115,22,0.3);color:#f97316">−</button><span class="sv" id="mr-v" style="color:#f97316">100%</span><button class="sb" id="mr-u" style="border-color:rgba(249,115,22,0.3);color:#f97316">+</button></div>
+    
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(100,220,255,0.4);margin-top:10px;margin-bottom:6px">Model Offset</div>
+    <div class="sr"><span style="min-width:45px">Off X</span><button class="sb" id="ox-d">−</button><span class="sv" id="ox-v">0.00</span><button class="sb" id="ox-u">+</button></div>
+    <div class="sr"><span style="min-width:45px">Off Y</span><button class="sb" id="oy-d">−</button><span class="sv" id="oy-v">-0.44</span><button class="sb" id="oy-u">+</button></div>
+    <div class="sr"><span style="min-width:45px">Off Z</span><button class="sb" id="oz-d">−</button><span class="sv" id="oz-v">-2.60</span><button class="sb" id="oz-u">+</button></div>
+
+    <div style="display:flex;gap:6px;margin-top:10px">
+      <button class="cb" id="cam-head">Focus Head</button>
+      <button class="cb" id="cam-body">Full Body</button>
+      <button class="cb" id="cam-reset">Reset Cam</button>
+    </div>
+    <div style="display:flex;margin-top:6px">
+      <button class="cb" id="off-reset" style="flex:1">Reset Offsets</button>
+    </div>
+    <div style="display:flex;margin-top:6px">
+      <button class="cb" id="vcam-toggle" style="flex:1;background:rgba(100,220,255,0.2);border-color:rgba(100,220,255,0.5);color:#64dcff">Virtual Cam: ON</button>
+    </div>
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(100,220,255,0.6);margin-top:8px;margin-bottom:6px">Lens Zoom</div>
+    <div class="sr">
+      <input type="range" id="cam-fov" min="10" max="100" step="1" value="10" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="fov-v" style="color:#64dcff;min-width:40px">10°</span>
+    </div>
+
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(100,220,255,0.6);margin-top:12px;margin-bottom:6px">Light Intensity</div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Key</span>
+      <input type="range" id="light-key" min="0" max="3" step="0.05" value="1.2" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="lk-v" style="color:#64dcff;min-width:35px">1.2</span>
+    </div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Rim</span>
+      <input type="range" id="light-rim" min="0" max="3" step="0.05" value="0.6" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="lr-v" style="color:#64dcff;min-width:35px">0.6</span>
+    </div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Fill</span>
+      <input type="range" id="light-fill" min="0" max="3" step="0.05" value="1.2" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="lf-v" style="color:#64dcff;min-width:35px">1.2</span>
+    </div>
+
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(100,220,255,0.6);margin-top:12px;margin-bottom:6px">Material (Global)</div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Rough</span>
+      <input type="range" id="mat-rough" min="0" max="1" step="0.05" value="0.6" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="mr-val" style="color:#64dcff;min-width:35px">0.6</span>
+    </div>
+    <div class="sr">
+      <span style="min-width:45px;font-size:10px">Metal</span>
+      <input type="range" id="mat-metal" min="0" max="1" step="0.05" value="0.15" style="flex:1;accent-color:#64dcff">
+      <span class="sv" id="mm-val" style="color:#64dcff;min-width:35px">0.15</span>
+    </div>
+  </div>
+
+  <div class="hp controller-status">
+    <div class="ht">Input<span class="ht-toggle">−</span></div>
+    <div style="font-size:12px;color:#c0c0cc"><span class="sd off" id="gp-dot"></span><span id="gp-status">No Gamepad</span></div>
+    <div class="sub" id="gp-hint">Press any button on controller</div>
+    <div class="sub">Keyboard: Always Active</div>
+  </div>
+
+  <div class="hp controls-panel">
+    <div class="ht">Controls<span class="ht-toggle">−</span></div>
+    <div class="cr"><span>Head Yaw</span><span class="ck">Arrows / L-Stick X</span></div>
+    <div class="cr"><span>Head Pitch</span><span class="ck">Arrows / L-Stick Y</span></div>
+    <div class="cr"><span>Head Roll</span><span class="ck">Q E / R-Stick X</span></div>
+    <div class="cr"><span>Mouth</span><span class="ck">Space+Scroll / RT</span></div>
+    <div class="cr"><span>Cam XY</span><span class="ck">W A S D</span></div>
+    <div class="cr"><span>Cam Z</span><span class="ck">Shift + W S</span></div>
+    <div class="cr"><span>Cam Reset</span><span class="ck">Z</span></div>
+    <div class="cr"><span>Input Reset</span><span class="ck">R / Y Button</span></div>
+    <br/>
+    <div class="cr"><span>Enable input control for Userscript</span><span class="ck">N</span></div>
+  </div>
+
+  <div class="hp values-panel">
+    <div class="ht">State<span class="ht-toggle">−</span></div>
+    <div class="vr"><span class="vl">Yaw</span><span class="vn" id="v-yaw">0.0°</span></div>
+    <div class="vr"><span class="vl">Pitch</span><span class="vn" id="v-pitch">0.0°</span></div>
+    <div class="vr"><span class="vl">Roll</span><span class="vn" id="v-roll">0.0°</span></div>
+    <div class="vr"><span class="vl">Mouth</span><div style="display:flex;align-items:center"><span class="vn" id="v-mouth" style="margin-right:8px">0%</span><div class="vbt"><div class="vbf" id="mouth-bar" style="width:0%"></div></div></div></div>
+    
+    <div id="debug-state" style="display:none;margin-top:8px;border-top:1px solid rgba(100,220,255,0.1);padding-top:8px">
+      <div style="font-size:9px;color:#64dcff;opacity:0.6;margin-bottom:4px;text-transform:uppercase">Debug Offsets</div>
+      <div class="vr"><span class="vl">Cam X</span><span class="vn" id="v-camx">0.00</span></div>
+      <div class="vr"><span class="vl">Cam Y</span><span class="vn" id="v-camy">0.00</span></div>
+      <div class="vr"><span class="vl">Cam Z</span><span class="vn" id="v-camz">0.00</span></div>
+      <div class="vr"><span class="vl">Model X</span><span class="vn" id="v-offx">0.00</span></div>
+      <div class="vr"><span class="vl">Model Y</span><span class="vn" id="v-offy">0.00</span></div>
+      <div class="vr"><span class="vl">Model Z</span><span class="vn" id="v-offz">0.00</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="viewport" id="canvas-container">
+  <div class="hud" id="hud">
+    <div class="top-right-btns">
+      <button class="top-btn" id=""><img style="height: 12px;" src="assets/big_ass_red_arrow.png" /></button>
+      <button class="top-btn" id="howto-btn">HOW TO USE THIS SHIT</button>
+      <button class="top-btn" id=""><img style="height: 12px; transform: rotate(180deg);" src="assets/big_ass_red_arrow.png" /></button>
+      <button class="top-btn" id="source-btn">SOURCE CODE</button>
+      <button class="top-btn" id="hide-ui-btn">Hide UI [H]</button>
+    </div>
+
+    <div class="hp model-panel" id="model-panel">
+      <div class="ht">Model<span class="ht-toggle">−</span></div>
+      <button class="lbtn" id="load-btn">Load Model File</button>
+      <input type="file" id="model-file" accept=".vrm,.fbx,.glb,.gltf,.zip" />
+      <input type="file" id="model-multi" accept=".fbx,.png,.jpg,.jpeg,.tga,.bmp" multiple style="display:none" />
+      <div class="format-badges">
+        <span class="fbadge vrm">VRM</span>
+        <span class="fbadge fbx">FBX</span>
+        <span class="fbadge glb">GLB/GLTF</span>
+        <span class="fbadge zip">ZIP</span>
+      </div>
+      <div class="drop-zone" id="drop-zone">
+        Drop folder or ZIP here<br>for FBX + textures
+      </div>
+      <button class="lbtn" id="load-multi-btn" style="margin-top:4px;font-size:9px;padding:5px 10px;opacity:0.7">
+        Or select FBX + texture files together
+      </button>
+      <div class="li" id="model-info">VRM = instant setup. FBX with textures = use ZIP or drop folder. GLB = self-contained.</div>
+      <div class="err" id="err-box"></div>
+      <div class="ok-box" id="ok-box"></div>
+
+      <!-- Bone assignment dropdowns -->
+      <div id="bone-section" style="display:none;margin-top:12px">
+        <div class="ht">Bone Assignment<span class="ht-toggle">−</span></div>
+        <div class="brow"><span class="blbl hd">Head</span><select class="bsel" id="sel-head"></select></div>
+        <div class="brow"><span class="blbl nk">Neck</span><select class="bsel" id="sel-neck"></select></div>
+        <div class="brow"><span class="blbl jw">Jaw</span><select class="bsel" id="sel-jaw"></select></div>
+        <div class="brow"><span class="blbl" style="color:#a78bfa">Spine</span><select class="bsel" id="sel-spine"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">L Shld</span><select class="bsel" id="sel-lshld"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">R Shld</span><select class="bsel" id="sel-rshld"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">L Arm</span><select class="bsel" id="sel-larm"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">R Arm</span><select class="bsel" id="sel-rarm"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">L Fore</span><select class="bsel" id="sel-lfore"></select></div>
+        <div class="brow"><span class="blbl" style="color:#64dcff">R Fore</span><select class="bsel" id="sel-rfore"></select></div>
+        <div class="brow"><span class="blbl" style="color:#facc15">Hips</span><select class="bsel" id="sel-hips"></select></div>
+
+        <div id="jaw-section" style="display:none;margin-top:8px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#f97316;opacity:0.7;margin-bottom:6px">Jaw Open Axis</div>
+          <div class="jaw-row">
+            <button class="axb active" data-a="x" id="ax-x">X</button>
+            <button class="axb" data-a="y" id="ax-y">Y</button>
+            <button class="axb" data-a="z" id="ax-z">Z</button>
+            <span style="margin-left:6px">Dir:</span>
+            <button class="axb active" data-d="1" id="dir-p">+</button>
+            <button class="axb" data-d="-1" id="dir-n">−</button>
+          </div>
+        </div>
+
+        <div id="morph-section" style="display:none;margin-top:10px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#f97316;opacity:0.7;margin-bottom:6px">Morph Targets (Blendshapes)</div>
+          
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#f97316;opacity:0.5;margin-bottom:4px">Mouth Control Assignment</div>
+          <div style="font-size:9px;color:#6a6a7a;margin-bottom:6px">Select which morph is controlled by RT / Space.</div>
+          <select class="bsel" id="morph-sel"><option value="">None (use jaw bone)</option></select>
+
+          <div class="morph-tester" id="morph-tester" style="display:none;margin-top:12px">
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#f97316;opacity:0.7;margin-bottom:6px">Morph Tester / Debug</div>
+            
+            <!-- Manual Idle Triggers (Debug Only) -->
+            <div id="debug-idle-triggers" style="display:none;margin-bottom:12px;border:1px solid rgba(167,139,250,0.3);padding:8px;border-radius:4px;background:rgba(167,139,250,0.05)">
+              <div style="font-size:8px;color:#a78bfa;text-transform:uppercase;margin-bottom:6px;letter-spacing:1px">Manual Idle Triggers</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+                <button class="cb" id="trigger-blink" style="grid-column: span 2; margin-bottom:4px">Force Blink</button>
+                <button class="cb dbg-tgl" data-cat="brows">Brows: OFF</button>
+                <button class="cb dbg-tgl" data-cat="tension">Tension: OFF</button>
+                <button class="cb dbg-tgl" data-cat="cheeks">Cheeks: OFF</button>
+              </div>
+            </div>
+
+            <input type="text" id="morph-filter" placeholder="Filter morphs..." class="kid-input" style="margin-bottom:8px;padding:4px 8px;font-size:10px">
+            <div id="morph-tester-list" style="max-height:300px;overflow-y:auto;padding-right:4px"></div>
+          </div>
+        </div>
+
+        <div id="anim-section" style="display:none;margin-top:10px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;opacity:0.7;margin-bottom:6px">Model Animations</div>
+          <div style="font-size:9px;color:#6a6a7a;margin-bottom:6px">List of all animation clips found in the model file.</div>
+          <select class="bsel" id="anim-sel"><option value="">(no animations)</option></select>
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <button class="cb" id="anim-play" style="flex:2">Play</button>
+            <button class="cb" id="anim-stop" style="flex:1">Stop</button>
+          </div>
+          <div class="sr" style="margin-top:6px">
+            <span style="font-size:9px;color:#a0a0b0">Time Scale</span>
+            <input type="range" id="anim-speed" min="0" max="2" step="0.1" value="1" style="flex:1;accent-color:#a78bfa">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="orbit-hint">Right-click drag to orbit · Scroll to zoom</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════
+function $(id){return document.getElementById(id)}
+function showErr(m){$('err-box').textContent=m;$('err-box').style.display='block';$('ok-box').style.display='none';hideGlobalLoader();}
+function showOk(m){$('ok-box').textContent=m;$('ok-box').style.display='block';$('err-box').style.display='none'}
+function clearMsg(){$('err-box').style.display='none';$('ok-box').style.display='none'}
+
+function showGlobalLoader(txt) {
+  if(txt) document.querySelector('#global-loader .loader-text').textContent = txt;
+  $('global-loader').style.display = 'flex';
+  $('loader-bar-container').style.display = 'none';
+  $('loader-bar-fill').style.width = '0%';
+}
+function updateGlobalLoader(txt, percent) {
+  if(txt) document.querySelector('#global-loader .loader-text').textContent = txt;
+  if(percent !== undefined) {
+    $('loader-bar-container').style.display = 'block';
+    $('loader-bar-fill').style.width = percent + '%';
+  }
+}
+function hideGlobalLoader() {
+  $('global-loader').style.display = 'none';
+}
+
+// ═══════════════════════════════════════════════════════
+// WORKER INITIALIZATION
+// ═══════════════════════════════════════════════════════
+var worker = new Worker('worker.js');
+var container = $('canvas-container');
+var canvas = document.createElement('canvas');
+container.prepend(canvas);
+
+var offscreen = canvas.transferControlToOffscreen();
+var cw = container.clientWidth || (innerWidth - 320) || 800;
+var ch = container.clientHeight || innerHeight || 600;
+
+worker.postMessage({
+  type: 'init',
+  canvas: offscreen,
+  width: cw,
+  height: ch,
+  pixelRatio: Math.min(devicePixelRatio, 2)
+}, [offscreen]);
+
+window.addEventListener('resize', function() {
+  var w = container.clientWidth;
+  var h = container.clientHeight;
+  worker.postMessage({ type: 'resize', width: w, height: h, pixelRatio: Math.min(devicePixelRatio, 2) });
+});
+
+// ═══════════════════════════════════════════════════════
+// INPUT FORWARDING
+// ═══════════════════════════════════════════════════════
+var keys = {};
+var mM = 0;
+var orbitTheta = 0, orbitPhi = 0.15, orbitDist = 3.5, isDrag = false, lastM = {x:0, y:0};
+
+window.addEventListener('keydown', function(e) {
+  if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT') return;
+  keys[e.code] = true;
+  if(e.code==='Space') e.preventDefault();
+  worker.postMessage({ type: 'input', keys: keys, mM: mM });
+});
+window.addEventListener('keyup', function(e) {
+  keys[e.code] = false;
+  worker.postMessage({ type: 'input', keys: keys, mM: mM });
+});
+
+canvas.addEventListener('mousedown', function(e) {
+  if(e.button===2||e.button===1||(e.button===0&&e.altKey)){ isDrag=true; lastM={x:e.clientX, y:e.clientY}; e.preventDefault(); }
+});
+window.addEventListener('mousemove', function(e) {
+  if(!isDrag) return;
+  orbitTheta -= (e.clientX - lastM.x) * 0.005;
+  orbitPhi = Math.max(-1.2, Math.min(1.2, orbitPhi + (e.clientY - lastM.y) * 0.005));
+  lastM = {x:e.clientX, y:e.clientY};
+  worker.postMessage({ type: 'orbit', theta: orbitTheta, phi: orbitPhi });
+});
+window.addEventListener('mouseup', function(){ isDrag=false; });
+
+window.addEventListener('wheel', function(e) {
+  if(keys['Space']) {
+    mM = Math.min(1, Math.max(0, mM + e.deltaY * -0.001));
+    worker.postMessage({ type: 'input', keys: keys, mM: mM });
+  } else if(e.altKey) {
+    var nextFov = Math.min(100, Math.max(10, (parseFloat($('cam-fov').value) || 10) + e.deltaY * 0.05));
+    $('cam-fov').value = nextFov;
+    $('fov-v').textContent = Math.round(nextFov) + '°';
+    worker.postMessage({ type: 'config', config: { tFov: nextFov } });
+  } else {
+    orbitDist = Math.max(0.3, Math.min(15, orbitDist + e.deltaY * 0.0005));
+    worker.postMessage({ type: 'zoom', dist: orbitDist });
+  }
+  e.preventDefault();
+}, {passive:false});
+
+// Gamepad
+function pollGamepad() {
+  var pads = navigator.getGamepads ? navigator.getGamepads() : [];
+  var gp = pads[0];
+  if (gp) {
+    worker.postMessage({ type: 'gamepad', gp: { axes: gp.axes, buttons: gp.buttons.map(b => ({pressed: b.pressed, value: b.value})) } });
+    if($('gp-dot').className.indexOf('off')>=0){
+      $('gp-dot').className='sd on'; $('gp-status').textContent=gp.id.substring(0,40);
+    }
+  } else if($('gp-dot').className.indexOf('on')>=0) {
+    $('gp-dot').className='sd off'; $('gp-status').textContent='No Gamepad';
+  }
+  requestAnimationFrame(pollGamepad);
+}
+pollGamepad();
+
+$('cam-fov').oninput=function(){
+  CFG.tFov = parseFloat(this.value);
+  $('fov-v').textContent = Math.round(CFG.tFov) + '°';
+};
+
+$('light-key').oninput = function() { worker.postMessage({ type: 'light', key: parseFloat(this.value) }); $('lk-v').textContent = parseFloat(this.value).toFixed(1); };
+$('light-rim').oninput = function() { worker.postMessage({ type: 'light', rim: parseFloat(this.value) }); $('lr-v').textContent = parseFloat(this.value).toFixed(1); };
+$('light-fill').oninput = function() { worker.postMessage({ type: 'light', fill: parseFloat(this.value) }); $('lf-v').textContent = parseFloat(this.value).toFixed(1); };
+
+$('mat-rough').oninput = function() { var v = parseFloat(this.value); $('mr-val').textContent = v.toFixed(2); worker.postMessage({ type: 'config', config: { rough: v } }); };
+$('mat-metal').oninput = function() { var v = parseFloat(this.value); $('mm-val').textContent = v.toFixed(2); worker.postMessage({ type: 'config', config: { metal: v } }); };
+
+$('vcam-toggle').onclick = function() {
+  var isOn = this.textContent.includes('ON');
+  this.textContent = isOn ? 'Virtual Cam: OFF' : 'Virtual Cam: ON';
+  worker.postMessage({ type: 'config', config: { vCam: !isOn } });
+};
+
+// ═══════════════════════════════════════════════════════
+// WORKER MESSAGES
+// ═══════════════════════════════════════════════════════
+let parentReady = true;
+worker.onmessage = function(e) {
+  var data = e.data;
+  switch(data.type) {
+    case 'ready': autoLoadDefaultModel(); break;
+    case 'loadProgress': updateGlobalLoader('Loading ' + data.name + '... ' + Math.round(data.percent) + '%', data.percent); break;
+    case 'error': showErr(data.message); break;
+    case 'modelLoaded': 
+      onModelLoaded(data); 
+      hideGlobalLoader(); 
+      break;
+    case 'boneAutoDetected': onBoneAutoDetected(data); break;
+    case 'hud': updateHUD(data); break;
+    case 'syncOrbit':
+      orbitDist = data.dist;
+      orbitTheta = data.theta;
+      orbitPhi = data.phi;
+      break;
+    case 'globalLoadComplete':
+      hideGlobalLoader();
+      setTimeout(function(){ worker.postMessage({ type: 'camAction', action: 'head' }); }, 200);
+      break;
+    case 'globalLoadProgress': updateGlobalLoader('Downloading... ' + Math.round((data.loaded/data.total)*100) + '%', (data.loaded/data.total)*100); break;
+    case 'CAMERA_FRAME':
+      if (window.parent && parentReady) {
+        parentReady = false;
+        window.parent.postMessage({ type: 'CAMERA_FRAME', bitmap: data.bitmap }, '*', [data.bitmap]);
+      }
+      break;
+  }
+};
+
+$('load-btn').onclick = function() { $('model-file').click(); };
+$('model-file').onchange = function(e) {
+  var f = e.target.files[0]; if(!f) return;
+  showGlobalLoader('Loading ' + f.name + '...');
+  var ext = f.name.split('.').pop().toLowerCase();
+  if(ext === 'zip') worker.postMessage({ type: 'loadZip', file: f });
+  else worker.postMessage({ type: 'loadFile', file: f, name: f.name });
+};
+
+function onModelLoaded(data) {
+  $('model-info').textContent = data.fileName + ' — ' + data.bones.length + ' bones, ' + data.morphs.length + ' morphs';
+  populateSelects(data.bones);
+  var mSel = $('morph-sel'); mSel.innerHTML = '<option value="">None (use jaw bone)</option>';
+  var testerDiv = $('morph-tester-list'); testerDiv.innerHTML = '';
+  data.morphs.forEach((m, i) => {
+    var ov = JSON.stringify({mn: m.meshName, idx: m.idx, mi: i});
+    var o = document.createElement('option'); o.value = ov; o.textContent = m.meshName + ' → ' + m.name; mSel.appendChild(o);
+    buildMorphTesterRow(testerDiv, m, i, ov);
+  });
+  if(data.morphs.length) $('morph-section').style.display = 'block';
+  var aSel = $('anim-sel'); aSel.innerHTML = '<option value="">(select animation)</option>';
+  data.animations.forEach((name, i) => { var o = document.createElement('option'); o.value = i; o.textContent = name; aSel.appendChild(o); });
+  $('anim-section').style.display = data.animations.length ? 'block' : 'none';
+}
+
+function onBoneAutoDetected(data) {
+  var msg = '✓ Auto-detected via ' + data.method + ':\n';
+  msg += 'Head: ' + (data.indices.head !== undefined ? 'Detected' : '⚠ not found') + '\n';
+  msg += 'Neck: ' + (data.indices.neck !== undefined ? 'Detected' : '⚠ not found') + '\n';
+  msg += 'Jaw: ' + (data.hasJaw ? 'Detected' : 'not found');
+  showOk(msg);
+  for(var role in data.indices) { var sel = $('sel-' + role); if(sel) sel.value = data.indices[role]; }
+  if(data.morphIdx !== -1) {
+    var mSel = $('morph-sel');
+    for(var i=0; i<mSel.options.length; i++) {
+       if(mSel.options[i].value.includes('"mn":"'+data.morphMeshName+'"') && mSel.options[i].value.includes('"idx":'+data.morphIdx)) {
+         mSel.selectedIndex = i; break;
+       }
+    }
+  }
+}
+
+var allMorphs=[];
+
+function buildMorphTesterRow(container,morph,idx,optVal){
+  var row=document.createElement('div');
+  row.className='morph-tester-row';
+  row.setAttribute('data-mi',idx);
+
+  var name=document.createElement('span');
+  name.className='morph-tester-name';
+  name.textContent=morph.meshName+' → '+morph.name;
+  name.title='Click to assign as mouth control';
+
+  var val=document.createElement('span');
+  val.className='morph-tester-val';
+  val.textContent='0%';
+
+  var slider=document.createElement('input');
+  slider.type='range';slider.min='0';slider.max='300';slider.value='0';
+  slider.className='morph-slider';
+
+  var mapBtn=document.createElement('button');
+  mapBtn.className='morph-map';
+  mapBtn.textContent='▶ Map';
+  mapBtn.title='Map this morph to RT / Space';
+
+  // Slider: preview this morph in real-time
+  slider.oninput=function(){
+    var v=parseInt(this.value)/100;
+    morph.mesh.morphTargetInfluences[morph.idx]=v;
+    val.textContent=Math.round(v*100)+'%';
+  };
+  // Reset on release (unless it's the active mouth morph)
+  slider.onchange=function(){
+    if(A.morphMesh!==morph.mesh||A.morphIdx!==morph.idx){
+      morph.mesh.morphTargetInfluences[morph.idx]=0;
+      val.textContent='0%';
+      this.value='0';
+    }
+  };
+
+  function assignMorph(){
+    // Clear all active highlights and mapped states
+    container.querySelectorAll('.morph-tester-name').forEach(function(n){n.classList.remove('active')});
+    container.querySelectorAll('.morph-map').forEach(function(b){b.classList.remove('mapped');b.textContent='▶ Map'});
+    name.classList.add('active');
+    mapBtn.classList.add('mapped');
+    mapBtn.textContent='✓ Mapped';
+    A.morphMesh=morph.mesh;A.morphIdx=morph.idx;
+    $('morph-sel').value=optVal;
+
+    // Auto-set Range to match current slider preview value (if > 100%)
+    var sliderVal=parseInt(slider.value)/100;
+    if(sliderVal>1){
+      CFG.mRange=sliderVal;
+      $('mr-v').textContent=Math.round(CFG.mRange*100)+'%';
+    }
+
+    // Reset all other morph previews
+    for(var j=0;j<allMorphs.length;j++){
+      if(j!==idx) allMorphs[j].mesh.morphTargetInfluences[allMorphs[j].idx]=0;
+    }
+    var allSliders=container.querySelectorAll('.morph-slider');
+    allSliders.forEach(function(s,si){if(si!==idx){s.value='0'}});
+    var allVals=container.querySelectorAll('.morph-tester-val');
+    allVals.forEach(function(v,vi){if(vi!==idx){v.textContent='0%'}});
+  }
+
+  // Both name click and button click assign
+  name.onclick=assignMorph;
+  mapBtn.onclick=assignMorph;
+
+  row.appendChild(name);row.appendChild(val);row.appendChild(slider);row.appendChild(mapBtn);
+  container.appendChild(row);
+}
+
+function autoLoadDefaultModel() {
+  var parts = ['assets/model.zip.part.aa', 'assets/model.zip.part.ab', 'assets/model.zip.part.ac', 'assets/model.zip.part.ad'];
+  showGlobalLoader('Loading model segments...');
+
+  var loadedBytes = new Array(parts.length).fill(0);
+  var partSizes = new Array(parts.length).fill(0);
+  var sizesKnown = 0;
+
+  function updateTotal() {
+    if (sizesKnown < parts.length) return;
+    var loaded = loadedBytes.reduce((a, b) => a + b, 0);
+    var total = partSizes.reduce((a, b) => a + b, 0);
+    if (total > 0) {
+      var p = Math.round((loaded / total) * 100);
+      updateGlobalLoader('Downloading: ' + p + '%', p);
+    }
+  }
+
+  Promise.all(parts.map(function(part, index) {
+    return fetch(part).then(function(res) {
+      if(!res.ok) throw new Error('Part ' + part + ' not found');
+      var contentLength = res.headers.get('content-length');
+      if (contentLength) {
+        partSizes[index] = parseInt(contentLength, 10);
+        sizesKnown++;
+      }
+      
+      var reader = res.body.getReader();
+      var chunks = [];
+      
+      return new Promise((resolve, reject) => {
+        function read() {
+          reader.read().then(({done, value}) => {
+            if (done) {
+              var merged = new Uint8Array(loadedBytes[index]);
+              var offset = 0;
+              for (var chunk of chunks) {
+                merged.set(chunk, offset);
+                offset += chunk.length;
+              }
+              resolve(merged.buffer);
+              return;
+            }
+            chunks.push(value);
+            loadedBytes[index] += value.length;
+            updateTotal();
+            read();
+          }).catch(reject);
+        }
+        read();
+      });
+    });
+  }))
+  .then(function(buffers){
+    updateGlobalLoader('Combining parts...', 100);
+    var blob = new Blob(buffers, {type: 'application/zip'});
+    worker.postMessage({ type: 'loadZip', file: blob });
+  })
+  .catch(function(err){
+    console.warn('[HC] Auto-load failed:', err.message);
+    hideGlobalLoader();
+    showErr('Failed to load model segments: ' + err.message);
+  });
+}
+
+function updateHUD(data) {
+  $('v-yaw').textContent = data.cY.toFixed(1) + '°'; $('v-pitch').textContent = data.cP.toFixed(1) + '°'; $('v-roll').textContent = data.cR.toFixed(1) + '°';
+  $('v-mouth').textContent = (data.cM * 100).toFixed(0) + '%'; $('mouth-bar').style.width = Math.min(100, data.cM * 100) + '%';
+  if (window.location.search.includes('debug=true')) {
+    $('v-camx').textContent = data.cCX.toFixed(2); $('v-camy').textContent = data.cCY.toFixed(2); $('v-camz').textContent = data.cCZ.toFixed(2);
+  }
+}
+
+function populateSelects(bones) {
+  var roles = ['head', 'neck', 'jaw', 'spine', 'larm', 'rarm', 'lfore', 'rfore', 'lshld', 'rshld', 'hips'];
+  roles.forEach(role => {
+    var sel = $('sel-' + role); if(!sel) return;
+    sel.innerHTML = '<option value="-1">(none)</option>';
+    bones.forEach((name, i) => { var o = document.createElement('option'); o.value = i; o.textContent = name; sel.appendChild(o); });
+    sel.onchange = function() { worker.postMessage({ type: 'boneAssign', role: role, index: parseInt(this.value) }); };
+  });
+  $('bone-section').style.display = 'block';
+}
+
+$('source-btn').onclick = function() { window.open('https://github.com/mollomm1/fuck-k-id-verification', '_blank'); };
+
+function renderMarkdown(md) {
+  var html = md
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^\* (.*$)/gm, '<li>$1</li>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/`(.*?)`/g, '<code>$1</code>');
+  
+  if (html.includes('<li>')) {
+    html = html.replace(/(<li>.*<\/li>)/gms, '<ul>$1</ul>');
+  }
+  return '<p>' + html + '</p>';
+}
+
+$('howto-btn').onclick = function() {
+  showGlobalLoader('Loading instructions...');
+  fetch('README.md?t=' + Date.now()).then(r => r.text()).then(text => { 
+    hideGlobalLoader(); 
+    $('howto-content').innerHTML = renderMarkdown(text); 
+    $('howto-modal').style.display = 'flex'; 
+  });
+};
+$('howto-close').onclick = function() { $('howto-modal').style.display = 'none'; };
+$('hide-ui-btn').onclick = function() { $('hud').classList.toggle('hidden'); };
+
+// ═══════════════════════════════════════════════════════
+// IFRAME HANDLING & ANTI-THROTTLE
+// ═══════════════════════════════════════════════════════
+function startSilentAudio() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const audioCtx = new AudioContext();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.type = 'sine'; oscillator.frequency.value = 60; gainNode.gain.value = 0.0001;
+    oscillator.connect(gainNode); gainNode.connect(audioCtx.destination); oscillator.start();
+    console.log("Iframe: Silent audio started (Anti-Throttle active).");
+}
+startSilentAudio();
+document.body.addEventListener('click', startSilentAudio, { once: true });
+
+window.addEventListener('message', (event) => {
+    const msg = event.data;
+    if (msg.type === 'FRAME_ACK') { parentReady = true; worker.postMessage({ type: 'mainReady' }); return; }
+    if (msg.type !== 'REMOTE_CONTROL') return;
+    const { action, data } = msg;
+    if (action === 'KEYDOWN' || action === 'KEYUP') {
+        const type = action.toLowerCase();
+        const eventObj = new KeyboardEvent(type, { key: data.key, code: data.code, shiftKey: data.shiftKey, ctrlKey: data.ctrlKey, altKey: data.altKey, bubbles: true, cancelable: true });
+        window.dispatchEvent(eventObj);
+    }
+    if (action === 'SCROLL') {
+        const wheelEv = new WheelEvent('wheel', { deltaX: data.deltaX, deltaY: data.deltaY, deltaZ: data.deltaZ, deltaMode: data.deltaMode, bubbles: true, cancelable: true });
+        window.dispatchEvent(wheelEv);
+    }
+});
+
+// Auto-collapse all panels on mobile
+if(innerWidth<=768){
+  document.querySelectorAll('.hp').forEach(function(panel){
+    panel.classList.add('collapsed');
+    var toggle=panel.querySelector('.ht-toggle');
+    if(toggle)toggle.textContent='+';
+  });
+}
+
+// Debug mode check: hide model panel unless ?debug=true is present
+if (!window.location.search.includes('debug=true')) {
+  var mp = $('model-panel');
+  if (mp) mp.style.display = 'none';
+} else {
+  worker.postMessage({ type: 'setDebug', value: true });
+}
+</script>
+</body>
+</html>
