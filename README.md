@@ -16,6 +16,7 @@
 
 * In Chrome (or Brave, Edge, Helium) install Tampermonkey and add this user script <a style="color: cyan;" download href="assets/k-id-bypasser.userscript.js">[k-id-bypasser.userscript.js]</a>.
 
+* you also need <a style="color: cyan;" href="https://chromewebstore.google.com/detail/csp-unblock/lkbelpgpclajeekijigjffllhigbhob">CSP Unblock</a>.
 
 * Be sure to enable "Allow userscripts", this is required on modern chrome versions <a style="color: cyan;" href="https://www.tampermonkey.net/faq.php#Q209">https://www.tampermonkey.net/faq.php#Q209</a>
 

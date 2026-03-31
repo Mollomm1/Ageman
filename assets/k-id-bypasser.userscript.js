@@ -13,7 +13,7 @@
     // ═══════════════════════════════════════════════════════
     // CONFIGURATION
     // ═══════════════════════════════════════════════════════
-    const IFRAME_SRC = "https://mollomm1.github.io/ageman/";
+    const IFRAME_SRC = "https://mollomm1.github.io/Ageman/";
     const SPOOF_NAME = "HP Integrated Camera";
     const TARGET_NAME = "OBS Virtual Camera";
 
